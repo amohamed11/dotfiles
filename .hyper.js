@@ -141,7 +141,7 @@ module.exports = {
   //   `project#1.0.1`
   plugins: [ 
     	"hyper-snazzy",
-    	"hyper-systray",
+	"hypercwd",
     	"hyper-opacity",
     	"hyper-tab-icons",
     	"hyperborder"],
