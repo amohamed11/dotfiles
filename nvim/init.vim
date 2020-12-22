@@ -1,6 +1,5 @@
 " ~~~ Plugins ~~~
 call plug#begin('~/.local/share/nvim/plugged')
-" Plug 'shougo/deoplete.nvim'
 Plug 'sheerun/vim-polyglot'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
@@ -9,7 +8,6 @@ Plug 'metakirby5/codi.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'lambdalisue/suda.vim'
@@ -18,9 +16,72 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-markdown'
 Plug 'nelstrom/vim-markdown-folding'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tell-k/vim-autopep8'
+Plug 'wakatime/vim-wakatime'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter'
+Plug 'justinmk/vim-sneak'
+Plug 'ryanoasis/vim-devicons'
+Plug 'voldikss/vim-floaterm'
+
+" Themes
+" Plug 'drewtempelmeyer/palenight.vim'
+" Plug 'Brettm12345/moonlight.vim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'kyoz/purify', { 'rtp': 'vim' }
+
+" Deoplete
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+" AutoCompletion
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'fatih/vim-go'
+
 call plug#end()
+
+" ~~~ Plugin Config files ~~~
+source $HOME/.config/nvim/plugin-configs/fzf.vim
+
+" Sneak
+let g:sneak#label = 1
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+" LanguageClient
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+      \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+      \ 'cpp': ['clangd'],
+      \ }
+autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+
+" note that if you are using Plug mapping you should not use `noremap` mappings.
+nmap <F5> <Plug>(lcn-menu)
+" Or map each action separately
+nmap <silent>K <Plug>(lcn-hover)
+nmap <silent> gd <Plug>(lcn-definition)
+nmap <silent> <F2> <Plug>(lcn-rename)
+
+" Vim-devicons
+let g:airline_powerline_fonts = 1
 
 " NERDTree commands
 map <C-n> :NERDTreeToggle<CR>
@@ -29,6 +90,13 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Tabs commands
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+
+" Hotkeys 
+nnoremap <SPACE> :Files<CR>
 
 " Highlight the line on which the cursor lives.
 set nocursorline
@@ -183,8 +251,8 @@ nmap <F5> :e!<cr>
 set smarttab
 set expandtab
 set tabstop=8
-set softtabstop=4
-set shiftwidth=4
+set softtabstop=2
+set shiftwidth=2
 
 "set smartindent
 set autoindent
@@ -266,95 +334,6 @@ let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 let g:ctrlp_show_hidden =1
 let g:ctrlp_clear_cache_on_exit = 0
 
-" Lightline
-" Get default from :h lightline
-let g:lightline = {
-    \ 'colorscheme': 'lena',
-    \ }
-
-let g:lightline.active = {
-    \ 'left': [ [ 'mode', 'paste', 'sep1' ],
-    \           [ 'readonly', 'filename', 'modified' ],
-    \           [ ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'filetype' ] ]
-    \ }
-
-let g:lightline.inactive = {
-    \ 'left': [ [ 'mode', 'paste', 'sep1' ],
-    \           [ 'readonly', 'filename', 'modified' ] ],
-    \ 'right': [ [ 'lineinfo' ],
-    \            [ 'percent' ],
-    \            [ 'filetype' ] ]
-    \ }
-
-let g:lightline.tabline = {
-    \ 'left': [ [ 'tabs' ] ],
-    \ 'right': [ ] }
-
-let g:lightline.tab = {
-    \ 'active': [ 'tabnum', 'filename', 'modified' ],
-    \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
-
-let g:lightline.component = {
-    \ 'mode': '%{lightline#mode()}',
-    \ 'absolutepath': '%F',
-    \ 'relativepath': '%f',
-    \ 'filename': '%t',
-    \ 'modified': '%M',
-    \ 'bufnum': '%n',
-    \ 'paste': '%{&paste?"PASTE":""}',
-    \ 'readonly': '%R',
-    \ 'charvalue': '%b',
-    \ 'charvaluehex': '%B',
-    \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
-    \ 'fileformat': '%{&ff}',
-    \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
-    \ 'percent': '%3p%%',
-    \ 'percentwin': '%P',
-    \ 'spell': '%{&spell?&spelllang:""}',
-    \ 'lineinfo': '%3l:%-2v',
-    \ 'line': '%l',
-    \ 'column': '%c',
-    \ 'close': '%999X X ',
-    \ 'winnr': '%{winnr()}',
-    \ 'sep1': ''
-    \}
-
-let g:lightline.mode_map = {
-    \ 'n' : 'N',
-    \ 'i' : 'I',
-    \ 'R' : 'R',
-    \ 'v' : 'V',
-    \ 'V' : 'L',
-    \ "\<C-v>": 'B',
-    \ 'c' : 'C',
-    \ 's' : 'S',
-    \ 'S' : 'S-LINE',
-    \ "\<C-s>": 'S-BLOCK',
-    \ 't': 'T',
-    \ }
-
-
-let g:lightline.separator = {
-    \   'left': '', 'right': ''
-    \}
-let g:lightline.subseparator = {
-    \   'left': '', 'right': '' 
-    \}
-
-let g:lightline.tabline_separator = g:lightline.separator
-let g:lightline.tabline_subseparator = g:lightline.subseparator
-
-let g:lightline.enable = {
-    \ 'statusline': 1,
-    \ 'tabline': 1
-    \ }
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Clear search highlighting with Escape key
 nnoremap <silent><esc> :noh<return><esc>
@@ -370,8 +349,11 @@ set encoding=utf8
 scriptencoding utf-8
 
 " Colorscheme
-colorscheme lena
 set fillchars=vert::
+set background=dark
+set termguicolors
+colorscheme purify
+let g:deepspace_italics=1
 
 " Restore last cursor position and marks on open
 au BufReadPost *
