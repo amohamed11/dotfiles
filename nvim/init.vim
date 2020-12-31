@@ -1,10 +1,9 @@
 " ~~~ Plugins ~~~
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
 Plug 'dkarter/bullets.vim'
-Plug 'metakirby5/codi.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -24,6 +23,8 @@ Plug 'airblade/vim-rooter'
 Plug 'justinmk/vim-sneak'
 Plug 'ryanoasis/vim-devicons'
 Plug 'voldikss/vim-floaterm'
+Plug 'TaDaa/vimade'
+Plug 'tpope/vim-surround'
 
 " Themes
 " Plug 'drewtempelmeyer/palenight.vim'
@@ -41,7 +42,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-" AutoCompletion
+" Languages
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'autozimu/LanguageClient-neovim', {
@@ -49,7 +50,7 @@ Plug 'autozimu/LanguageClient-neovim', {
       \ 'do': 'bash install.sh',
       \ }
 Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
@@ -67,11 +68,16 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
+" Languge plugin setting
 let g:LanguageClient_serverCommands = {
       \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
-      \ 'cpp': ['clangd'],
+      \ 'cpp': ['clangd']
       \ }
-autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+" autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+let g:go_fmt_command = "goimports"
+let g:go_auto_type_info = 1
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+set completeopt-=preview
 
 " note that if you are using Plug mapping you should not use `noremap` mappings.
 nmap <F5> <Plug>(lcn-menu)
@@ -233,6 +239,9 @@ nmap <M-o> <C-W>w
 vmap <M-o> <C-W>w
 tmap <M-o> <esc><C-W>w
 imap <M-o> <esc><C-W>w
+
+" Escape in terminal
+tnoremap <Esc> <C-\><C-n>
 
 " Command mode history
 cmap <M-p> <up>
