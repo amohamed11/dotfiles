@@ -1,10 +1,9 @@
 " ~~~ Plugins ~~~
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
 Plug 'dkarter/bullets.vim'
-Plug 'metakirby5/codi.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -24,13 +23,18 @@ Plug 'airblade/vim-rooter'
 Plug 'justinmk/vim-sneak'
 Plug 'ryanoasis/vim-devicons'
 Plug 'voldikss/vim-floaterm'
+Plug 'TaDaa/vimade'
+Plug 'tpope/vim-surround'
+Plug 'sbdchd/neoformat'
+Plug 'junegunn/goyo.vim'
 
 " Themes
 " Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ayu-theme/ayu-vim'
 " Plug 'Brettm12345/moonlight.vim'
 " Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'kyoz/purify', { 'rtp': 'vim' }
+" Plug 'kyoz/purify', { 'rtp': 'vim' }
 
 " Deoplete
 if has('nvim')
@@ -41,15 +45,16 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-" AutoCompletion
+" Languages
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 Plug 'autozimu/LanguageClient-neovim', {
       \ 'branch': 'next',
       \ 'do': 'bash install.sh',
       \ }
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'fatih/vim-go'
+" Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
 
@@ -67,16 +72,23 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
+" Languge plugin setting
+let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
       \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
       \ 'cpp': ['clangd'],
+      \ 'python': ['~/envs/neovim/bin/pyls'],
       \ }
-autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+let g:python3_host_prog = expand('$HOME/envs/neovim/bin/python3.9')
+let g:go_fmt_command = "goimports"
+let g:go_auto_type_info = 1
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+set completeopt-=preview
 
 " note that if you are using Plug mapping you should not use `noremap` mappings.
 nmap <F5> <Plug>(lcn-menu)
 " Or map each action separately
-nmap <silent>K <Plug>(lcn-hover)
+nmap <silent> K <Plug>(lcn-hover)
 nmap <silent> gd <Plug>(lcn-definition)
 nmap <silent> <F2> <Plug>(lcn-rename)
 
@@ -87,6 +99,7 @@ let g:airline_powerline_fonts = 1
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeShowHidden=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -97,6 +110,7 @@ nnoremap <C-Right> :tabnext<CR>
 
 " Hotkeys 
 nnoremap <SPACE> :Files<CR>
+nmap <C-M-F> :Rg<CR>
 
 " Highlight the line on which the cursor lives.
 set nocursorline
@@ -234,6 +248,9 @@ vmap <M-o> <C-W>w
 tmap <M-o> <esc><C-W>w
 imap <M-o> <esc><C-W>w
 
+" Escape in terminal
+tnoremap <Esc> <C-\><C-n>
+
 " Command mode history
 cmap <M-p> <up>
 cmap <M-n> <down>
@@ -349,14 +366,20 @@ set encoding=utf8
 scriptencoding utf-8
 
 " Colorscheme
+let ayucolor='mirage'
 set fillchars=vert::
 set background=dark
 set termguicolors
-colorscheme purify
-let g:deepspace_italics=1
+colorscheme ayu
+" let g:deepspace_italics=1
 
 " Restore last cursor position and marks on open
 au BufReadPost *
          \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' 
          \ |   exe "normal! g`\""
          \ | endif
+
+set clipboard+=unnamedplus
+" vnoremap y "*y
+" vnoremap p "*p
+
