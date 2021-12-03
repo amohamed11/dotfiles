@@ -75,6 +75,7 @@ set hidden
 " Languge plugin setting
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
+      \ 'rust': ['~/.cargo/bin/rustup', 'run', 'nightly', 'rust-analyzer'],
       \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
       \ 'cpp': ['clangd'],
       \ 'python': ['~/envs/neovim/bin/pyls'],
@@ -105,8 +106,8 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Tabs commands
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-h> :tabprevious<CR>
+nnoremap <C-l> :tabnext<CR>
 
 " Hotkeys 
 nnoremap <SPACE> :Files<CR>
