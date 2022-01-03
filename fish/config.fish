@@ -4,3 +4,6 @@ end
 
 alias v=nvim
 alias lg=lazygit
+alias ls=exa
+
+export PATH="$HOME/.cargo/bin:$PATH"
