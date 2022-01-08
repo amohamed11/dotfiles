@@ -222,6 +222,7 @@ return packer.startup(function()
          require("core.mappings").telescope()
       end,
    }
+
    -- load user defined plugins
    require("core.hooks").run("install_plugins", use)
 end)
