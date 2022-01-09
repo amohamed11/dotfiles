@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/home/anas/.local/share/nvim/site/pack/packer/start/TrueZen.nvim",
     url = "https://github.com/Pocco81/TrueZen.nvim"
   },
+  ["ayu-vim"] = {
+    loaded = true,
+    path = "/home/anas/.local/share/nvim/site/pack/packer/start/ayu-vim",
+    url = "https://github.com/ayu-theme/ayu-vim"
+  },
   ["better-escape.nvim"] = {
     config = { "require('plugins.configs.others').better_escape()" },
     loaded = false,
@@ -111,6 +116,11 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/anas/.local/share/nvim/site/pack/packer/opt/bufferline.nvim",
     url = "https://github.com/akinsho/bufferline.nvim"
+  },
+  ["bullets.vim"] = {
+    loaded = true,
+    path = "/home/anas/.local/share/nvim/site/pack/packer/start/bullets.vim",
+    url = "https://github.com/dkarter/bullets.vim"
   },
   ["cmp-buffer"] = {
     after = { "cmp-path" },
@@ -395,7 +405,7 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'better-escape.nvim', 'friendly-snippets'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'friendly-snippets', 'better-escape.nvim'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au VimEnter * ++once lua require("packer.load")({'packer.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-treesitter', 'indent-blankline.nvim', 'nvim-colorizer.lua'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
