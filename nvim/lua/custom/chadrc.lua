@@ -3,6 +3,13 @@
 
 local M = {}
 
+M.options = {
+   -- custom = {}
+   -- general nvim/vim options , check :h optionname to know more about an option
+   clipboard = "unnamed,unnamedplus",
+   relativenumber = true,
+}
+
 M.plugins = {
    status = {
       colorizer = true,
