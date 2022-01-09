@@ -1,135 +1,161 @@
+/* global settings and color variables */
 * {
-    /* Dracula theme colour palette */
-    drac-bgd: #282a36;
-    drac-cur: #44475a;
-    drac-fgd: #f8f8f2;
-    drac-cmt: #6272a4;
-    drac-cya: #8be9fd;
-    drac-grn: #50fa7b;
-    drac-ora: #ffb86c;
-    drac-pnk: #ff79c6;
-    drac-pur: #bd93f9;
-    drac-red: #ff5555;
-    drac-yel: #f1fa8c;
+   blue:             #a6e1ff;
+   darkblue:         #B48EAD;
+   cyan:             #95e6cb;
+   lightcyan:        #B48EAD;
+   green:            #cee6ac;
+   red:              #ff6666;
 
-    font: "Jetbrains Mono 12";
+   dark1:            #1f2430;
+   dark2:            #292b30;
+   dark3:            #bfbab0;
+   dark4:            #bfbab0;
 
-    foreground: @drac-fgd;
-    background: @drac-bgd;
-    active-background: @drac-pnk;
-    urgent-background: @drac-red;
-    
-    selected-background: @active-background;
-    selected-urgent-background: @urgent-background;
-    selected-active-background: @active-background;
-    separatorcolor: @active-background;
-    bordercolor: #6272a4;
+   light1:           #e6e1cf;
+
+   background-color: @dark1;
+   border-color:     @dark2;
+   text-color:       @dark3;
+   dark-text-color:  @dark4;
+   main-color:       @blue;
+   highlight:        @light1;
+   urgent-color:     @red;
+   selected-color:   @lightcyan;
 }
 
-#window {
-    background-color: @background;
-    border:           3;
-    border-radius: 6;
-    border-color: @bordercolor;
-    padding:          5;
+window {
+   background-color: @background-color;
+   width: 33%;
+   padding: 5px;
+   border:  2px;
+   border-radius: 6px;
+   border-color: @border-color;
 }
-#mainbox {
-    border:  0;
-    padding: 5;
+
+mainbox {
+   background-color: @background-color;
+   spacing:0px;
 }
-#message {
-    border:       1px dash 0px 0px ;
-    border-color: @separatorcolor;
-    padding:      1px ;
+
+message {
+   padding: 6px 10px;
+   background-color: @background-color;
 }
-#textbox {
-    text-color: @foreground;
+
+textbox {
+   text-color: @text-color;
+   background-color:@background-color;
 }
-#listview {
-    fixed-height: 0;
-    border:       2px dash 0px 0px ;
-    border-color: @bordercolor;
-    spacing:      2px ;
-    scrollbar:    false;
-    padding:      2px 0px 0px ;
+
+listview {
+   fixed-height: true;
+   dynamic: true;
+   scrollbar: false;
+   spacing: 0px;
+   padding: 1px 0px 0px 0px;
+   margin: 0px 0px 1px 0px;
+   background: @background-color;
 }
-#element {
-    border:  0;
-    padding: 1px ;
+
+element {
+   padding: 4px 10px;
 }
-#element.normal.normal {
-    background-color: @background;
-    text-color:       @foreground;
+
+element normal.normal {
+   padding: 0px 15px;
+   background-color: @background-color;
+   text-color: @dark-text-color;
 }
-#element.normal.urgent {
-    background-color: @urgent-background;
-    text-color:       @urgent-foreground;
+
+element normal.urgent {
+   background-color: @background-color;
+   text-color: @urgent-color;
 }
-#element.normal.active {
-    background-color: @active-background;
-    text-color:       @background;
+
+element normal.active {
+   background-color: @background-color;
+   text-color: @main-color;
 }
-#element.selected.normal {
-    background-color: @selected-background;
-    text-color:       @foreground;
+
+element selected.normal {
+    background-color: @border-color;
+    text-color:       @selected-color;
 }
-#element.selected.urgent {
-    background-color: @selected-urgent-background;
-    text-color:       @foreground;
+
+element selected.urgent {
+    background-color: @urgent-color;
+    text-color:       @background-color;
 }
-#element.selected.active {
-    background-color: @selected-active-background;
-    text-color:       @background;
+
+element selected.active {
+    background-color: @border-color;
+    text-color:       @green;
 }
-#element.alternate.normal {
-    background-color: @background;
-    text-color:       @foreground;
+
+element alternate.normal {
+    background-color: @background-color;
+    text-color:       @dark-text-color;
 }
-#element.alternate.urgent {
-    background-color: @urgent-background;
-    text-color:       @foreground;
+
+element alternate.urgent {
+    background-color: @background-color;
+    text-color:       @urgent-color;
 }
-#element.alternate.active {
-    background-color: @active-background;
-    text-color:       @foreground;
+
+element alternate.active {
+    background-color: @background-color;
+    text-color:       @main-color;
 }
-#scrollbar {
-    width:        2px ;
-    border:       0;
-    handle-width: 8px ;
-    padding:      0;
+
+scrollbar {
+   background-color: @background-color;
+   handle-color: @background-color;
+   handle-width: 0px;
 }
-#sidebar {
-    border:       2px dash 0px 0px ;
-    border-color: @separatorcolor;
+
+mode-switcher {
+   background-color: @background-color;
 }
-#button.selected {
-    background-color: @selected-background;
-    text-color:       @foreground;
+
+button {
+   background-color: @background-color;
+   text-color:       @text-color;
 }
-#inputbar {
-    spacing:    0;
-    text-color: @foreground;
-    padding:    1px ;
+
+button selected {
+    text-color:       @main-color;
 }
-#case-indicator {
-    spacing:    0;
-    text-color: @foreground;
+
+inputbar {
+   background-color: @background-color;
+   spacing: 0px;
+   children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
 }
-#entry {
-    spacing:    0;
-    text-color: @drac-cya;
+
+prompt {
+   padding:0px 10px;
+   background-color: @background-color;
+   text-color: @highlight;
 }
-#prompt {
-    spacing:    0;
-    text-color: @drac-grn;
+
+entry {
+   padding:0px 6px;
+   background-color:@background-color;
+   text-color:@light1;
 }
-#inputbar {
-    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+
+case-indicator {
+   padding:6px 10px;
+   text-color:@main-color;
+   background-color:@background-color;
 }
+
 #textbox-prompt-colon {
+	padding:0px 0px;
     expand:     false;
     str:        ":";
     margin:     0px 0.3em 0em 0em ;
-    text-color: @drac-grn;
+    text-color: @highlight;
+    background-color:@background-color;
 }
