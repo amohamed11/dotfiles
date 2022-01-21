@@ -22,6 +22,12 @@ M.setup_lsp = function(attach, capabilities)
      on_attach = attach,
      capabilities = capabilities, 
    }
+   
+   lspconfig.gopls.setup {
+     cmd = { "~/go/bin/gopls" },
+     on_attach = attach,
+     capabilities = capabilities, 
+   }
 
 end
 

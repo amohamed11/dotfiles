@@ -7,7 +7,14 @@ hooks.add("install_plugins", function(use)
   use "tpope/vim-surround"
   use "Pocco81/TrueZen.nvim"
   use "dkarter/bullets.vim"
-  use "ayu-theme/ayu-vim"
+  use "Shatur/neovim-ayu"
+  use {
+    "junegunn/goyo.vim",
+    setup = function()
+      require("core.utils").packer_lazy_load "goyo.vim"
+    end,
+  }
+  use "karb94/neoscroll.nvim"
 end)
 
 -- custom plugin-related settings

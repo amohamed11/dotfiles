@@ -21,9 +21,8 @@ M.init = function(theme)
       require "colors.highlights"
    end
 
-   -- custom colorscheme call for non-supported theme
-   vim.cmd("let ayucolor='mirage'")
-   vim.cmd("colorscheme ayu")
+   -- custom colorscheme call to force best theme
+   vim.cmd("colorscheme ayu-mirage")
 end
 
 -- returns a table of colors for given or current theme
